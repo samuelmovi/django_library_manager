@@ -1,0 +1,26 @@
+{% extends "library/base.html" %}
+{% block content %}
+<!-- SHOW LOANS -->
+<div class="scrollable">
+  <table class="w3-table-all w3-hoverable">
+    {% if table_headers %}
+  <tr class="w3-cyan">
+    <th>{{ table_headers.book }}</th>
+    <th>{{ table_headers.recipient }}</th>
+    <th>{{ table_headers.loan_date }}</th>
+    <th>{{ table_headers.return_date }}</th>
+  </tr>
+    {% endif %}
+    {% if loans %}
+    {% for loan in loans %}
+    <tr class="w3-white">
+      <th>{{ loan.book }}</th>
+      <th>{{ loan.recipient }}</th>
+      <th>{{ loan.loan_date }}</th>
+      <th>{{ loan.return_date }}</th>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </table>
+</div>
+{% endblock %}

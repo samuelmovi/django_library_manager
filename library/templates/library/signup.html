@@ -1,0 +1,15 @@
+{% extends "library/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="signup w3-container w3-card-4 w3-margin-top">
+    <form action="{% url 'library:signup' %}" method="post">
+      <br/>
+      {% csrf_token %}
+      {{ form.as_p }}
+        <br/>
+      <button type="submit">{% trans 'Sign up' %}</button>
+        <br/>
+        <br/>
+    </form>
+</div>
+{% endblock %}

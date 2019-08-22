@@ -1,0 +1,55 @@
+{% extends "library/base.html" %}
+{% block content %}
+{% load i18n %}
+{% if books %}
+<div class="scrollable">
+  {% if action == 'new' %}
+  <form class="w3-container" action="{% url 'library:new_book' %}" method='post'>
+  {% elif action == 'modify' %}
+  <form class="w3-container" action="{% url 'library:modify_book'%}" method='post'>
+  {% elif action == 'delete' %}
+  <form class="w3-container" action="{% url 'library:delete_book'%}" method='post'>
+  {% elif action == 'loan' %}
+  <form class="w3-container" action="{% url 'library:loan_book'%}" method='post'>
+  {% endif %}
+  {% csrf_token %}
+  <table class="w3-table-all w3-hoverable">
+  {% if table_headers %}
+  <tr class="choose-table w3-cyan">
+    <th>#</th>
+    <th>{{ table_headers.title }}</th>
+    <th>{{ table_headers.author }}</th>
+    <th>{{ table_headers.publisher }}</th>
+    <th>{{ table_headers.publish_date }}</th>
+    <th>{{ table_headers.purchase_date }}</th>
+    <th>{{ table_headers.loaned }}</th>
+  </tr>
+  {% endif %}
+  {% for book in books %}
+  <tr class="w3-white">
+    <th>
+    <input type='radio' name='bookID' value='{{ book.id }}'>
+    </th>
+    <th>{{ book.title }}</th>
+    <th>{{ book.author }}</th>
+    <th>{{ book.publisher }}</th>
+    <th>{{ book.publish_date }}</th>
+    <th>{{ book.purchase_date }}</th>
+    <th>{{ book.loaned }}</th>
+  </tr>
+  {% endfor %}
+  </table>
+    {% if action == 'loan' %}
+    <input class="w3-input" type="text" name="recipient">
+	      <label>{% trans 'Borrower' %}</label>
+    {% endif %}
+    <br/><br/>
+    <button type="submit" class="w3-button w3-green w3-hover-black w3-block">{{ button_text }}</button>
+</form>
+</div>
+{% elif response %}
+<p>
+    {{ response }}
+</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "library/base.html" %}
+{% block content %}
+{% load i18n %}
+<!-- BAD DATA -->
+	 <article style="border: 5px solid green">
+		 <h1>{% trans 'Input data was not properly formatted.' %}</h1>
+		 <h1>{% trans 'Change it and try again' %}</h1>
+		 <h3>
+	 </h3>
+	</article>
+	<p/>
+	<p/>
+	<div class="w3-container">
+		<a href="/" class="w3-btn w3-border w3-border-blue" style="font-size:1.5vw">{% trans 'Back to the start' %}</a>
+	</div>
+{% endblock %}

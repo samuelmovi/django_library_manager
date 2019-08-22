@@ -1,0 +1,35 @@
+{% extends "library/base.html" %}
+{% block content %}
+{% load i18n %}
+{% if loans %}
+  <form class="w3-container" action="{% url 'library:return_book' %}" method='post'>
+  {% csrf_token %}
+  <table class="w3-table-all w3-hoverable">
+  {% if table_headers %}
+  <tr class="choose-table w3-cyan">
+    <th>#</th>
+    <th>{{ table_headers.recipient }}</th>
+    <th>{{ table_headers.book }}</th>
+    <th>{{ table_headers.loan_date }}</th>
+  </tr>
+  {% endif %}
+  {% for loan in loans %}
+  <tr class="w3-white">
+    <th>
+    <input type='radio' name='loanID' value='{{ loan.id }}'>
+    </th>
+    <th>{{ loan.recipient }}</th>
+    <th>{{ loan.book }}</th>
+    <th>{{ loan.loan_date }}</th>
+  </tr>
+  {% endfor %}
+  </table>
+    <br/><br/>
+    <button type="submit" class="w3-button w3-green w3-hover-black w3-block">{{ button_text }}</button>
+</form>
+{% elif response %}
+<p>
+    {{ response }}
+</p>
+{% endif %}
+{% endblock %}

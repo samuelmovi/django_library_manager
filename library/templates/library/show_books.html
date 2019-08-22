@@ -1,0 +1,34 @@
+{% extends "library/base.html" %}
+{% block content %}
+<!-- SHOW BOOKS -->
+<div class="scrollable">
+  <table class="w3-table-all w3-hoverable">
+    {% if table_headers %}
+  <tr class="w3-cyan">
+    <th>{{ table_headers.title }}</th>
+    <th>{{ table_headers.author }}</th>
+    <th>{{ table_headers.genre }}</th>
+    <th>{{ table_headers.publisher }}</th>
+    <th>{{ table_headers.isbn }}</th>
+    <th>{{ table_headers.publish_date }}</th>
+    <th>{{ table_headers.purchase_date }}</th>
+    <th>{{ table_headers.loaned }}</th>
+  </tr>
+    {% endif %}
+    {% if books %}
+    {% for book in books %}
+    <tr class="w3-white">
+      <th>{{ book.title }}</th>
+      <th>{{ book.author }}</th>
+      <th>{{ book.genre }}</th>
+      <th>{{ book.publisher }}</th>
+      <th>{{ book.isbn }}</th>
+      <th>{{ book.publish_date }}</th>
+      <th>{{ book.purchase_date }}</th>
+      <th>{{ book.loaned }}</th>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </table>
+</div>
+{% endblock %}

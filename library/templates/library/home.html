@@ -1,0 +1,17 @@
+{% extends "library/base.html" %}
+{% block content %}
+{% load i18n %}
+<div class=" home w3-container w3-card-4 w3-margin-top">
+    <div class="user-info" >
+    <p >{% trans 'Hello' %} {{ user.username }}</p>
+    <p>{% trans 'This is a summary of your book collection' %}:</p>
+    <ul>
+        <li>{% trans 'Total books' %}: {{ books }}</li>
+        <li>{% trans 'Pending loans' %}: {{ loans }}</li>
+    </ul>
+    <br/>
+    </div>
+    <br/>
+    <a class="logout" href="{% url 'library:log_me_out' %}">{% trans 'Log out' %}</a>
+</div>
+{% endblock %}

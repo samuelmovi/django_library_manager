@@ -1,0 +1,43 @@
+{% extends "library/base.html" %}
+{% block content %}
+{% load i18n %}
+{% if locations %}
+  {% if action == 'new' %}
+  <form class="w3-container" action="{% url 'library:new_location' %}" method='post'>
+  {% elif action == 'modify' %}
+  <form class="w3-container" action="{% url 'library:modify_location'%}" method='post'>
+  {% elif action == 'delete' %}
+  <form class="w3-container" action="{% url 'library:delete_location'%}" method='post'>
+  {% endif %}
+  {% csrf_token %}
+  <table class="w3-table-all w3-hoverable" style="font-size:1.5vw">
+  {% if table_headers %}
+  <tr class="choose-table w3-cyan">
+    <th>#</th>
+    <th>{{ table_headers.address }}</th>
+    <th>{{ table_headers.room }}</th>
+    <th>{{ table_headers.furniture }}</th>
+    <th>{{ table_headers.details }}</th>
+  </tr>
+  {% endif %}
+  {% for location in locations %}
+  <tr class="w3-white">
+    <th>
+    <input type='radio' name='locationID' value='{{ location.id }}'>
+    </th>
+    <th>{{ location.address }}</th>
+    <th>{{ location.room }}</th>
+    <th>{{ location.furniture }}</th>
+    <th>{{ location.details }}</th>
+  </tr>
+  {% endfor %}
+  </table>
+    <br/><br/>
+    <button type="submit" class="w3-button w3-green w3-hover-black w3-block">{{ button_text }}</button>
+</form>
+{% elif response %}
+<p>
+    {{ response }}
+</p>
+{% endif %}
+{% endblock %}

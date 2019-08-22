@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans page_title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'library/w3.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'library/style.css' %}">
+    <style>
+    </style>
+    <script></script>
+</head>
+<body>
+<div class="super-frame">
+  <div>
+    {% if user.is_authenticated %}
+    <a class="user-name w3-cell w3-btn" href="{% url 'library:home' %}">{{user.username}}</a>
+    {% endif %}
+    <header>{% trans 'My Library Manager' %}</header>
+  </div>
+{% if user.is_authenticated %}
+<!-- NAVBAR -->
+<div class=" navbar w3-cell-row w3-black">
+    <a href="{% url 'library:books' %}" class="w3-container w3-cell w3-btn w3-mobile w3-hover-blue"
+       >{% trans 'Books' %}</a>
+    <a href="{% url 'library:locations' %}" class="w3-container w3-cell w3-btn w3-mobile w3-hover-blue"
+       >{% trans 'Locations' %}</a>
+    <a href="{% url 'library:loans' %}" class="w3-container w3-cell w3-btn w3-mobile w3-hover-blue" >{% trans 'Loans' %}</a>
+</div>
+{% endif %}
+{% block content %}{% endblock %}
+{% if user.is_authenticated %}
+<div class=" bottom-bar w3-cell-row w3-black">
+  {% if bottom_bar %}
+  {% for link in bottom_bar %}
+    <a href="{{link.href}}" class="bottom_link w3-container w3-cell w3-btn w3-mobile w3-hover-green">{{link.text }}</a>
+  {% endfor %}
+  {% endif %}
+{% endif %}
+</div>
+</body>
+</html>

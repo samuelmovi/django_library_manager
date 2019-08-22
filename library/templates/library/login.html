@@ -1,0 +1,43 @@
+{% extends "library/base.html" %}
+{% block content %}
+{% load i18n %}
+<!-- LOGIN TEMPLATE -->
+<div>
+ {% if form.errors %}
+<p>{% trans "Your username and password didn't match. Please try again." %}</p>
+{% endif %}
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>{% trans "Your account doesn't have access to this page. To proceed,
+    please login with an account that has access." %}</p>
+    {% else %}
+    
+  {% endif %}
+{% endif %}
+<div class="login w3-container w3-card-4 w3-margin-top">
+    <form action="{% url 'login' %}" method="post">
+        <br/>
+        <p>{% trans 'Please login to see this page.' %}</p>
+        <br/>
+          {% csrf_token %}
+          <table>
+            <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+          </table>
+          <br/>
+          <input type="submit" value="login">
+          <input type="hidden" name="next" value="{{ next }}">
+        <br/>
+    <br/>
+        <p>{% trans 'Not signed up yet???' %}</p>
+        <a href="{% url 'library:signup' %}">{% trans 'Sign up here!!' %}</a>
+    </form>
+</div>
+</div>
+{% endblock %}

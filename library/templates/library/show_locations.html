@@ -1,0 +1,26 @@
+{% extends "library/base.html" %}
+{% block content %}
+<!-- SHOW LOCATIONS -->
+<div class="scrollable">
+  <table class="w3-table-all w3-hoverable">
+    {% if table_headers %}
+  <tr class="w3-cyan">
+    <th>{{ table_headers.address }}</th>
+    <th>{{ table_headers.room }}</th>
+    <th>{{ table_headers.furniture }}</th>
+    <th>{{ table_headers.details }}</th>
+  </tr>
+    {% endif %}
+    {% if locations %}
+    {% for location in locations %}
+    <tr class="w3-white">
+      <th>{{ location.address }}</th>
+      <th>{{ location.room }}</th>
+      <th>{{ location.furniture }}</th>
+      <th>{{ location.details }}</th>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </table>
+</div>
+{% endblock %}
