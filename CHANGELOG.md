@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add logging functionality
 - make the info pages show the created and modified fields (display only)
 - check for translation error and non-translations in translated interface
+- refactor with semantic elements
+
+## 2019-08-28
+### Changed
+- div tags in templates for semantic tags
 
 ## 2019-08-21
 ### Added

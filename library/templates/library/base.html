@@ -14,22 +14,21 @@
     <script></script>
 </head>
 <body>
-<div class="super-frame">
-  <div>
+  <header>
     {% if user.is_authenticated %}
     <a class="user-name w3-cell w3-btn" href="{% url 'library:home' %}">{{user.username}}</a>
     {% endif %}
-    <header>{% trans 'My Library Manager' %}</header>
-  </div>
+    <banner>{% trans 'My Library Manager' %}</banner>
+  </header>
 {% if user.is_authenticated %}
 <!-- NAVBAR -->
-<div class=" navbar w3-cell-row w3-black">
+<nav class=" navbar w3-cell-row w3-black">
     <a href="{% url 'library:books' %}" class="w3-container w3-cell w3-btn w3-mobile w3-hover-blue"
        >{% trans 'Books' %}</a>
     <a href="{% url 'library:locations' %}" class="w3-container w3-cell w3-btn w3-mobile w3-hover-blue"
        >{% trans 'Locations' %}</a>
     <a href="{% url 'library:loans' %}" class="w3-container w3-cell w3-btn w3-mobile w3-hover-blue" >{% trans 'Loans' %}</a>
-</div>
+</nav>
 {% endif %}
 {% block content %}{% endblock %}
 {% if user.is_authenticated %}
@@ -39,7 +38,7 @@
     <a href="{{link.href}}" class="bottom_link w3-container w3-cell w3-btn w3-mobile w3-hover-green">{{link.text }}</a>
   {% endfor %}
   {% endif %}
-{% endif %}
 </div>
+{% endif %}
 </body>
 </html>
