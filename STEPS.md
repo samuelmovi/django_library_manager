@@ -30,6 +30,7 @@ DATABASES = {
 ## APP SETUP
 - Create app: `python manage.py startapp library`
 - Add `library.apps.LibraryConfig` to `INSTALLED_APPS` in settings.py
+- Create file `library/urls.py`
 
 ## MODELS
 - Create models (library/models.py)
