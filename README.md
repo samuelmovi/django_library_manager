@@ -9,7 +9,11 @@ It's also multilingual, currently with support for English(default) and Spanish.
 For use in development, it required the following:
 
 - Python 3.x
-- Django: `pip install django`
+- Django: 
+```
+pip install django
+pip install postgres
+```
 - Postgresql docker image: `docker pull postgres:alpine`
 - Postgresql client: `sudo apt install postgresql-client`
 
