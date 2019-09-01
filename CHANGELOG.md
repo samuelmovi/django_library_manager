@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - make the info pages show the created and modified fields (display only)
 - check for translation error and non-translations in translated interface
 - implement table sorting with jquery
+- add media_url settings
 
 ## 2019-08-21
 ### Added
