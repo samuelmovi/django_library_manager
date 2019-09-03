@@ -7,11 +7,7 @@
          <h2 align="center" >{% trans 'Book Information' %}</h2>
 	  </div>
       <div class="w3-container " style="white-space:nowrap">
-	  {% if action == 'new' %}
-	  <form action="{% url 'library:new_book' %}" method='post'>
-	  {% elif action == 'modify' %}
 	  <form action="{% url 'library:book_info' book.id %}" method='post'>
-	  {% endif %}
 		{% csrf_token %}
 	  <input type='hidden' name='bookID' value='{{book.id}}'>
 	  <label>{% trans 'Title' %}</label>

@@ -137,7 +137,6 @@ class BookInfo(LoginRequiredMixin, View):
             context = {
                 'book': book,
                 'all_locations': my_locations,
-                'action': 'modify',
             }
             return render(request, 'library/book_info.html', context)
         except Exception as e:
@@ -385,36 +384,49 @@ class NewLocation(LoginRequiredMixin, View):
 class LocationInfo(LoginRequiredMixin, View):
     login_url = '/login/'
     title = _("Location Info")
+    model_fields = ['address', 'room', ' furniture', 'details']
     
     def get(self, request, location_id):
         try:
-            all_location = Location.objects.order_by('id')
+            location = Location.objects.get(pk=location_id)
             context = {
-                'action': 'delete',
+                'location': location,
                 'page_title': self.title,
-                # 'my_header': header,
-                'locations': all_location,
                 'table_headers': location_table_headers,
-                'button_text': self.title,
+                # 'button_text': self.title,
             }
-            return render(request, 'library/choose_location.html', context)
-        except Exception:
+            return render(request, 'library/location_info.html', context)
+        except Exception as e:
+            print("[!] Error processing request: {}".format(e))
             return redirect('/bad_data/')
     
-    def post(self, request):
+    def post(self, request, location_id):
         try:
             # check csrf
             request.csrf_processing_done = False
             reason = CsrfViewMiddleware().process_view(request, None, (), {})
             if reason is not None:
                 return reason
-            # deleting db model entry
-            Location.objects.filter(pk=request.POST['locationID']).delete()
-            return redirect('/locations/')
-        except Exception:
+            # SELECT ACTION
+            if request.POST.get('action') == 'modify':
+                location = Location.objects.get(pk=location_id)
+                for field in self.model_fields:
+                    location.__dict__[field] = request.POST.get(field, None)
+                # update modification date field
+                location.modified = timezone.now()
+                location.save()
+            elif request.POST.get('action') == 'delete':
+                # deleting db model entry
+                Location.objects.filter(pk=location_id).delete()
+            else:
+                return redirect('/bad_data/')
+            return redirect('/locations')
+        except Exception as e:
+            print("[!] Error processing request: {}".format(e))
             return redirect('/bad_data/')
 
 
+"""
 class DeleteLocation(LoginRequiredMixin, View):
     login_url = '/login/'
     title = _("Choose Location to Delete")
@@ -446,6 +458,7 @@ class DeleteLocation(LoginRequiredMixin, View):
             return redirect('/locations/')
         except Exception:
             return redirect('/bad_data/')
+"""
 
 
 class LoansView(LoginRequiredMixin, generic.ListView):

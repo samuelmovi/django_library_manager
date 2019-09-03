@@ -6,28 +6,30 @@
   {{ response }}
   </p>
 {% else %}
-  <div   class="w3-container">
-    <div  class="w3-container w3-teal">
+  <div  class="w3-container small-font w3-teal">
       <div class="w3-container">
-         <p style="font-size:1.7vw;text-align:center" >{% trans 'Add new Location to Database' %}</p>
+         <h2 align="center" >{% trans 'Location Information' %}</h2>
 	  </div>
       <div class="w3-container">
-		<form class="w3-container" action="{% url 'library:new_location' %}" method='post'>
+	  <form action="{% url 'library:location_info' location.id %}" method='post'>
             {% csrf_token %}
+            <input type='hidden' name='locationID' value='{{location.id}}'>
 		  <label>{% trans 'Address' %}</label>
-		  <input class="w3-input" type="text" name="address">
+		  <input class="w3-input" type="text" name="address"  value="{{location.address}}">
           <label>{% trans 'Room' %}</label>
-  		  <input class="w3-input" type="text" name="room">
+  		  <input class="w3-input" type="text" name="room" value="{{location.room}}">
   		  <label>{% trans 'Furniture' %}</label>
-  		  <input class="w3-input" type="text" name="furniture">
+  		  <input class="w3-input" type="text" name="furniture" value="{{location.furniture}}">
   		  <label>{% trans 'Details' %}</label>
-  		  <input class="w3-input" type="text" name="details">
+  		  <input class="w3-input" type="text" name="details" value="{{location.details}}">
 			<br/>
-  		  <button class="w3-button w3-block w3-hover-black w3-green">{% trans 'Add New Location' %}</button>
+	<div class="medium-font w3-cell-row w3-black">
+  		<button type="submit" name="action" value="modify" class="w3-half w3-container w3-cell w3-btn w3-mobile w3-hover-green">{% trans 'Modify'%}</button>
+		<button type="submit" name="action" value="delete" class="w3-half w3-container w3-cell w3-btn w3-mobile w3-hover-green">{% trans 'Delete'%}</button>
+	</div>
 		</form>
     </div>
   </div>
-</div>
 {% endif %}
 <br/>
 {% endblock %}

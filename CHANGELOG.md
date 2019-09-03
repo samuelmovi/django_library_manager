@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - refactor with semantic elements
 - implement table sorting with jquery
 - add media_url settings
+- implement testing for new views
 
 ## 2019-09-03
 ### Fixed
@@ -20,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - new view for books `/books/<path:book_id>/` to show info
 - in book info view add buttons to modify or delete entry
 - add hover-over colors to table heads and rows to indicate interactivity
-
+- implemented new scheme for locations
 
 ## 2019-08-28
 ### Changed
