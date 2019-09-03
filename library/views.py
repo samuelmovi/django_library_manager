@@ -114,7 +114,7 @@ class BooksView(LoginRequiredMixin, generic.ListView):
         #  context['my_header'] = header,
         context['table_headers'] = book_table_headers
         context['books'] = all_books
-        context['bottom_bar'] = self.bottom_bar
+        # context['bottom_bar'] = self.bottom_bar
         return context
 
 

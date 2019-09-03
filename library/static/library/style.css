@@ -28,10 +28,12 @@ header {
 }
 
 /* show book info */
-.scrollable {
-  height:80%;
-  overflow-y:scroll;
+.small-font {
   font-size: small;
+}
+
+.medium-font {
+  font-size: medium;
 }
 
 /* for the choose tables */
