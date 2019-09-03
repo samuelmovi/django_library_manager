@@ -126,11 +126,6 @@ class BookInfo(LoginRequiredMixin, View):
     
     def get(self, request, book_id, **kwargs):
         try:
-            # check csrf
-            request.csrf_processing_done = False
-            reason = CsrfViewMiddleware().process_view(request, None, (), {})
-            if reason is not None:
-                return reason
             book = Book.objects.get(pk=book_id)
             # prepare location drop-down data
             all_locations = Location.objects.order_by('address')
@@ -151,8 +146,28 @@ class BookInfo(LoginRequiredMixin, View):
             print("[!] Error processing request: {}".format(e))
             return redirect('/bad_data/')
 
-    def post(self, request):
-        pass
+    def post(self, request, book_id):
+        # check csrf
+        request.csrf_processing_done = False
+        reason = CsrfViewMiddleware().process_view(request, None, (), {})
+        if reason is not None:
+            return reason
+        # for k, v in request.POST.items():
+        #    print('\t> {}: {}'.format(k, v))
+        # SELECT ACTION
+        if request.POST.get('action') == 'modify':
+            book = Book.objects.get(pk=book_id)
+            for field in self.model_fields:
+                book.__dict__[field] = request.POST.get(field, None)
+            # update modification date field
+            book.modified = timezone.now()
+            book.save()
+        elif request.POST.get('action') == 'delete':
+            # deleting db model entry
+            Book.objects.filter(pk=book_id).delete()
+        else:
+            return redirect('/bad_data/')
+        return redirect('/books/')
 
 
 class NewBook(LoginRequiredMixin, View):

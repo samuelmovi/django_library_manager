@@ -11,7 +11,7 @@
 	  {% if action == 'new' %}
 	  <form action="{% url 'library:new_book' %}" method='post'>
 	  {% elif action == 'modify' %}
-	  <form action="{% url 'library:book_modifier' book.id %}" method='post'>
+	  <form action="{% url 'library:book_info' book.id %}" method='post'>
 	  {% endif %}
 		{% csrf_token %}
 	  <input type='hidden' name='bookID' value='{{book.id}}'>
@@ -42,7 +42,10 @@
 			{% endif %}
 		</select>
 	<br/>
-	<button type="submit" class="w3-button w3-green w3-block w3-hover-black">{% trans 'Modify Book' %}</button>
+	<button type="submit" name="action" value="modify" class="w3-button w3-green w3-block w3-hover-black">
+		{% trans 'Modify'%}</button>
+	<button type="submit" name="action" value="delete" class="w3-button w3-green w3-block w3-hover-black">
+		{% trans 'Delete'%}</button>
 	</form>
     </div>
   </div>
