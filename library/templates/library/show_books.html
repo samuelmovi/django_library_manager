@@ -17,7 +17,7 @@
     {% endif %}
     {% if books %}
     {% for book in books %}
-    <tr id="{{book.id}}" onclick="location.href='/books/modify/{{book.id}}/';" class="book-row w3-white">
+    <tr id="{{book.id}}" onclick="location.href='/books/{{book.id}}/';" class="book-row w3-white">
       <th>{{ book.title }}</th>
       <th>{{ book.author }}</th>
       <th>{{ book.genre }}</th>

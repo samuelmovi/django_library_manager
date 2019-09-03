@@ -8,10 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add logging functionality
 - make the info pages show the created and modified fields (display only)
 - check for translation error and non-translations in translated interface
-<<<<<<< HEAD
 - refactor with semantic elements
 - implement table sorting with jquery
 - add media_url settings
+- in book info view add buttons to modify or delete entry
+
+## 2019-09-03
+### Added
+- new view for books `/books/<path:book_id>/` to show info 
 
 ## 2019-08-28
 ### Changed

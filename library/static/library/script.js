@@ -22,7 +22,7 @@ $(document).ready(function(){
             //$(this).replaceWith('<a href="/books/modify/'+rowID+'/" />');
         });
     })
-    
+
   // column sorting
     function sortBooks(){
         var bookInfoTable = $('#info');

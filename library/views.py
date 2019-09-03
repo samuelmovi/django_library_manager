@@ -118,6 +118,43 @@ class BooksView(LoginRequiredMixin, generic.ListView):
         return context
 
 
+class BookInfo(LoginRequiredMixin, View):
+    login_url = '/login/'
+    model_fields = [
+        'title', 'author', 'genre', 'publisher',
+        'isbn', 'publish_date', 'purchase_date', 'location']
+    
+    def get(self, request, book_id, **kwargs):
+        try:
+            # check csrf
+            request.csrf_processing_done = False
+            reason = CsrfViewMiddleware().process_view(request, None, (), {})
+            if reason is not None:
+                return reason
+            book = Book.objects.get(pk=book_id)
+            # prepare location drop-down data
+            all_locations = Location.objects.order_by('address')
+            my_locations = []
+            for location in all_locations:
+                value = location.id
+                text = location.address + ' - ' + location.room + ' - ' + location.furniture + ' - ' + location.details
+                data = {'value': value, 'text': text}
+                my_locations.append(data)
+            # set response's context
+            context = {
+                'book': book,
+                'all_locations': my_locations,
+                'action': 'modify',
+            }
+            return render(request, 'library/book_info.html', context)
+        except Exception as e:
+            print("[!] Error processing request: {}".format(e))
+            return redirect('/bad_data/')
+
+    def post(self, request):
+        pass
+
+
 class NewBook(LoginRequiredMixin, View):
     login_url = '/login/'
     model_fields = [
