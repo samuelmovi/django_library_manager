@@ -37,7 +37,9 @@ header {
 }
 
 /* show books */
-
+th {
+    cursor: pointer;
+}
 
 /* for the choose tables */
 .choose-table {

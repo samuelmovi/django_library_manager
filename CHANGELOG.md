@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - make the info pages show the created and modified fields (display only)
 - check for translation error and non-translations in translated interface
 - refactor with semantic elements
-- implement table sorting with jquery
 - add media_url settings
 - implement testing for new views
 
 ## 2019-09-03
+### Added
+- implement table sorting with jquery
+
 ### Fixed
 - better container styles for template's layouts
 
