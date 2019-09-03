@@ -2,7 +2,7 @@
 {% block content %}
 <!-- SHOW BOOKS -->
 <div class="scrollable">
-  <table class="w3-table-all w3-hoverable">
+  <table id="books" class="w3-table-all w3-hoverable">
     {% if table_headers %}
   <tr class="w3-cyan">
     <th>{{ table_headers.title }}</th>
@@ -17,7 +17,7 @@
     {% endif %}
     {% if books %}
     {% for book in books %}
-    <tr class="w3-white">
+    <tr id="{{book.id}}" onclick="location.href='/books/modify/{{book.id}}/';" class="book-row w3-white">
       <th>{{ book.title }}</th>
       <th>{{ book.author }}</th>
       <th>{{ book.genre }}</th>

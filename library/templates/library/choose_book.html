@@ -13,10 +13,9 @@
   <form class="w3-container" action="{% url 'library:loan_book'%}" method='post'>
   {% endif %}
   {% csrf_token %}
-  <table class="w3-table-all w3-hoverable">
+  <table id="info" class="w3-table-all w3-hoverable">
   {% if table_headers %}
   <tr class="choose-table w3-cyan">
-    <th>#</th>
     <th>{{ table_headers.title }}</th>
     <th>{{ table_headers.author }}</th>
     <th>{{ table_headers.publisher }}</th>
@@ -26,16 +25,14 @@
   </tr>
   {% endif %}
   {% for book in books %}
-  <tr class="w3-white">
-    <th>
-    <input type='radio' name='bookID' value='{{ book.id }}'>
-    </th>
-    <th>{{ book.title }}</th>
-    <th>{{ book.author }}</th>
-    <th>{{ book.publisher }}</th>
-    <th>{{ book.publish_date }}</th>
-    <th>{{ book.purchase_date }}</th>
-    <th>{{ book.loaned }}</th>
+  <tr class="book-info w3-white">
+    <input type='hidden' name='bookID' value='{{ book.id }}'>
+    <td>{{ book.title }}</td>
+    <td>{{ book.author }}</td>
+    <td>{{ book.publisher }}</td>
+    <td>{{ book.publish_date }}</td>
+    <td>{{ book.purchase_date }}</td>
+    <td>{{ book.loaned }}</td>
   </tr>
   {% endfor %}
   </table>
