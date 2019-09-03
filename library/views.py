@@ -215,6 +215,7 @@ class NewBook(LoginRequiredMixin, View):
             return redirect('/bad_data/')
 
 
+"""
 class ModifyBook(LoginRequiredMixin, View):
     login_url = '/login/'
     
@@ -324,6 +325,8 @@ class DeleteBook(LoginRequiredMixin, View):
             return redirect('/books/')
         except Exception:
             return redirect('/bad_data/')
+
+"""
 
 
 class LocationsView(LoginRequiredMixin, generic.ListView):
