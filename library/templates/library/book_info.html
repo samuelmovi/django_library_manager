@@ -50,46 +50,5 @@
 	</form>
   </div>
 </div>
-{% elif response %}
-  <p>
-  {{ response }}
-  </p>
-{% else %}
-  <div   class="w3-container">
-    <div  class="w3-container w3-teal">
-      <div class="w3-container">
-         <p style="font-size:1.7vw;text-align:center" >{% trans 'Add Book to Database' %}</p>
-	  </div>
-      <div class="w3-container">
-		<form class="w3-container" action="{% url 'library:new_book' %}" method='post'>
-			{% csrf_token %}
-		  <label>{% trans 'Title' %}</label>
-	      <input class="w3-input" type="text" name="title">
-	      <label >{% trans 'Author' %}</label>
-	      <input class="w3-input" type="text" name="author">
-	      <label>{% trans 'Genre' %}</label>
-	      <input class="w3-input" type="text" name="genre">
-	      <label>{% trans 'Publisher' %}</label>
-	      <input class="w3-input" type="text" name="publisher">
-	      <label>{% trans 'ISBN' %}</label>
-		  <input class="w3-input" type="text" name="isbn">
-	      <label >{% trans 'Publish date' %}</label>
-	      <input class="w3-input" type="text" name="publish_date">
-	      <label>{% trans 'Purchase date' %}</label>
-	      <input class="w3-input" type="text" name="purchase_date">
-	      <label>{% trans 'Location' %}</label>
-		  <select class="w3-input" name="location_id">
-		  	{% if all_locations %}
-			{% for location in all_locations %}
-			<option value="{{ location.value }}">{{ location.text }}</option>\n
-			{% endfor %}
-			{% endif %}
-		  </select>
-    	<br/><br/>
-			<button type="submit" class="w3-button w3-green w3-block w3-hover-black">{% trans 'Add New Book' %}</button>
-		</form>
-    </div>
-  </div>
-</div>
 {% endif %}
 {% endblock %}

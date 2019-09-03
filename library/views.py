@@ -100,8 +100,6 @@ class BooksView(LoginRequiredMixin, generic.ListView):
     title = _("All Books")
     bottom_bar = [
         {'href': '/books/new/', 'text': _('New')},
-        {'href': '/books/modify/', 'text': _('Modify')},
-        {'href': '/books/delete/', 'text': _('Delete')},
     ]
     
     def get_queryset(self):
@@ -114,7 +112,7 @@ class BooksView(LoginRequiredMixin, generic.ListView):
         #  context['my_header'] = header,
         context['table_headers'] = book_table_headers
         context['books'] = all_books
-        # context['bottom_bar'] = self.bottom_bar
+        context['bottom_bar'] = self.bottom_bar
         return context
 
 
@@ -188,9 +186,8 @@ class NewBook(LoginRequiredMixin, View):
             context = {
                 # 'my_header': header,
                 'all_locations': my_locations,
-                'action': 'new',
             }
-            return render(request, 'library/book_info.html', context)
+            return render(request, 'library/new_book.html', context)
         except Exception:
             return redirect('/bad_data/')
     
