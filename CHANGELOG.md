@@ -11,12 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - refactor with semantic elements
 - implement table sorting with jquery
 - add media_url settings
-- add hover-over colors to table heads and rows to indicate interactivity
 
 ## 2019-09-03
+### Fixed
+- better container styles for template's layouts
+
 ### Added
 - new view for books `/books/<path:book_id>/` to show info
 - in book info view add buttons to modify or delete entry
+- add hover-over colors to table heads and rows to indicate interactivity
 
 
 ## 2019-08-28

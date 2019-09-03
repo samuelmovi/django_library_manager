@@ -1,23 +1,23 @@
 {% extends "library/base.html" %}
 {% block content %}
 <!-- SHOW BOOKS -->
-<div class="small-font">
-  <table id="books" class="w3-table-all w3-hoverable">
+<div class="w3-margin small-font">
+  <table id="books" class="w3-table-all w3-hoverable ">
     {% if table_headers %}
   <tr class="w3-cyan">
-    <th>{{ table_headers.title }}</th>
-    <th>{{ table_headers.author }}</th>
-    <th>{{ table_headers.genre }}</th>
-    <th>{{ table_headers.publisher }}</th>
-    <th>{{ table_headers.isbn }}</th>
-    <th>{{ table_headers.publish_date }}</th>
-    <th>{{ table_headers.purchase_date }}</th>
-    <th>{{ table_headers.loaned }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.title }}</th>
+    <th class="w3-hover-light-blue">{{ table_headers.author }}</th>
+    <th class="w3-hover-light-blue">{{ table_headers.genre }}</th>
+    <th class="w3-hover-light-blue">{{ table_headers.publisher }}</th>
+    <th class="w3-hover-light-blue">{{ table_headers.isbn }}</th>
+    <th class="w3-hover-light-blue">{{ table_headers.publish_date }}</th>
+    <th class="w3-hover-light-blue">{{ table_headers.purchase_date }}</th>
+    <th class="w3-hover-light-blue">{{ table_headers.loaned }}</th>
   </tr>
     {% endif %}
     {% if books %}
     {% for book in books %}
-    <tr id="{{book.id}}" onclick="location.href='/books/{{book.id}}/';" class="book-row w3-white">
+    <tr id="{{book.id}}" onclick="location.href='/books/{{book.id}}/';" class="book-row w3-white w3-hover-pale-red">
       <th>{{ book.title }}</th>
       <th>{{ book.author }}</th>
       <th>{{ book.genre }}</th>

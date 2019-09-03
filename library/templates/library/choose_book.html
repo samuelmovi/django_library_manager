@@ -2,31 +2,24 @@
 {% block content %}
 {% load i18n %}
 {% if books %}
-<div class="scrollable">
-  {% if action == 'new' %}
-  <form class="w3-container" action="{% url 'library:new_book' %}" method='post'>
-  {% elif action == 'modify' %}
-  <form class="w3-container" action="{% url 'library:modify_book'%}" method='post'>
-  {% elif action == 'delete' %}
-  <form class="w3-container" action="{% url 'library:delete_book'%}" method='post'>
-  {% elif action == 'loan' %}
-  <form class="w3-container" action="{% url 'library:loan_book'%}" method='post'>
-  {% endif %}
+<div class="w3-margin small-font">
+  <form action="{% url 'library:loan_book'%}" method='post'>
   {% csrf_token %}
   <table id="info" class="w3-table-all w3-hoverable">
   {% if table_headers %}
   <tr class="choose-table w3-cyan">
-    <th>{{ table_headers.title }}</th>
-    <th>{{ table_headers.author }}</th>
-    <th>{{ table_headers.publisher }}</th>
-    <th>{{ table_headers.publish_date }}</th>
-    <th>{{ table_headers.purchase_date }}</th>
-    <th>{{ table_headers.loaned }}</th>
+    <th class="w3-hover-light-blue ">#</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.title }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.author }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.publisher }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.publish_date }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.purchase_date }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.loaned }}</th>
   </tr>
   {% endif %}
   {% for book in books %}
-  <tr class="book-info w3-white">
-    <input type='hidden' name='bookID' value='{{ book.id }}'>
+  <tr class="book-info w3-white ">
+    <td> <input type='radio' name='bookID' value='{{ book.id }}'></td>
     <td>{{ book.title }}</td>
     <td>{{ book.author }}</td>
     <td>{{ book.publisher }}</td>
