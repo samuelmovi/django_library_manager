@@ -2,18 +2,18 @@
 {% block content %}
 <!-- SHOW LOCATIONS -->
 <div class="w3-margin small-font">
-  <table class="w3-table-all w3-hoverable">
+  <table id="locations" class="w3-table-all w3-hoverable">
     {% if table_headers %}
   <tr class="w3-cyan">
-    <th>{{ table_headers.address }}</th>
-    <th>{{ table_headers.room }}</th>
-    <th>{{ table_headers.furniture }}</th>
-    <th>{{ table_headers.details }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.address }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.room }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.furniture }}</th>
+    <th class="w3-hover-light-blue ">{{ table_headers.details }}</th>
   </tr>
     {% endif %}
     {% if locations %}
     {% for location in locations %}
-    <tr class="w3-white">
+    <tr class="w3-white w3-hover-pale-red" onclick="location.href='/locations/{{location.id}}/';">
       <th>{{ location.address }}</th>
       <th>{{ location.room }}</th>
       <th>{{ location.furniture }}</th>

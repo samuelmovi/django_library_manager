@@ -1,0 +1,24 @@
+{% extends "library/base.html" %}
+{% block content %}
+{% load i18n %}
+  <div  class="w3-container small-font w3-teal">
+      <div class="w3-container">
+          <h2 align="center" >{% trans 'Add new Location to Database' %}</h2>
+	  </div>
+      <div class="w3-container">
+		<form class="w3-container" action="{% url 'library:new_location' %}" method='post'>
+            {% csrf_token %}
+		  <label>{% trans 'Address' %}</label>
+		  <input class="w3-input" type="text" name="address">
+          <label>{% trans 'Room' %}</label>
+  		  <input class="w3-input" type="text" name="room">
+  		  <label>{% trans 'Furniture' %}</label>
+  		  <input class="w3-input" type="text" name="furniture">
+  		  <label>{% trans 'Details' %}</label>
+  		  <input class="w3-input" type="text" name="details">
+			<br/>
+  		  <button class="medium-font w3-button w3-block w3-hover-black w3-green">{% trans 'Add New Location' %}</button>
+		</form>
+      </div>
+    </div>
+{% endblock %}

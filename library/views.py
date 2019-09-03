@@ -335,7 +335,6 @@ class LocationsView(LoginRequiredMixin, generic.ListView):
     title = _("All Locations")
     bottombar_links = [
         {'href': '/locations/new/', 'text': _('New')},
-        {'href': '/locations/delete/', 'text': _('Delete')},
     ]
     
     def get_queryset(self):
@@ -358,11 +357,7 @@ class NewLocation(LoginRequiredMixin, View):
     
     def get(self, request):
         try:
-            context = {
-                # 'my_header': header,
-                'action': 'new',
-            }
-            return render(request, 'library/location_info.html', context)
+            return render(request, 'library/new_location.html')
         except Exception:
             return redirect('/bad_data/')
     
@@ -382,6 +377,39 @@ class NewLocation(LoginRequiredMixin, View):
             location.created = timezone.now()
             # add instance to db
             location.save()
+            return redirect('/locations/')
+        except Exception:
+            return redirect('/bad_data/')
+
+
+class LocationInfo(LoginRequiredMixin, View):
+    login_url = '/login/'
+    title = _("Location Info")
+    
+    def get(self, request, location_id):
+        try:
+            all_location = Location.objects.order_by('id')
+            context = {
+                'action': 'delete',
+                'page_title': self.title,
+                # 'my_header': header,
+                'locations': all_location,
+                'table_headers': location_table_headers,
+                'button_text': self.title,
+            }
+            return render(request, 'library/choose_location.html', context)
+        except Exception:
+            return redirect('/bad_data/')
+    
+    def post(self, request):
+        try:
+            # check csrf
+            request.csrf_processing_done = False
+            reason = CsrfViewMiddleware().process_view(request, None, (), {})
+            if reason is not None:
+                return reason
+            # deleting db model entry
+            Location.objects.filter(pk=request.POST['locationID']).delete()
             return redirect('/locations/')
         except Exception:
             return redirect('/bad_data/')
