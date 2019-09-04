@@ -17,13 +17,13 @@
     {% if books %}
     {% for book in books %}
     <tr id="{{book.id}}" onclick="location.href='/books/{{book.id}}/';" class="book-row w3-white w3-hover-pale-red">
-      <th>{{ book.title }}</th>
-      <th>{{ book.author }}</th>
-      <th>{{ book.genre }}</th>
-      <th>{{ book.publisher }}</th>
-      <th>{{ book.publish_date }}</th>
-      <th>{{ book.purchase_date }}</th>
-      <th>{{ book.loaned }}</th>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.genre }}</td>
+      <td>{{ book.publisher }}</td>
+      <td>{{ book.publish_date }}</td>
+      <td>{{ book.purchase_date }}</td>
+      <td>{{ book.loaned }}</td>
     </tr>
     {% endfor %}
     {% endif %}

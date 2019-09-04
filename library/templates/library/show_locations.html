@@ -14,10 +14,10 @@
     {% if locations %}
     {% for location in locations %}
     <tr class="w3-white w3-hover-pale-red" onclick="location.href='/locations/{{location.id}}/';">
-      <th>{{ location.address }}</th>
-      <th>{{ location.room }}</th>
-      <th>{{ location.furniture }}</th>
-      <th>{{ location.details }}</th>
+      <td>{{ location.address }}</td>
+      <td>{{ location.room }}</td>
+      <td>{{ location.furniture }}</td>
+      <td>{{ location.details }}</td>
     </tr>
     {% endfor %}
     {% endif %}

@@ -14,10 +14,10 @@
     {% if loans %}
     {% for loan in loans %}
     <tr class="w3-white">
-      <th>{{ loan.book }}</th>
-      <th>{{ loan.recipient }}</th>
-      <th>{{ loan.loan_date }}</th>
-      <th>{{ loan.return_date }}</th>
+      <td>{{ loan.book }}</td>
+      <td>{{ loan.recipient }}</td>
+      <td>{{ loan.loan_date }}</td>
+      <td>{{ loan.return_date }}</td>
     </tr>
     {% endfor %}
     {% endif %}
