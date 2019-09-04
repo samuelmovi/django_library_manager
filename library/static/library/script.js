@@ -1,13 +1,4 @@
 $(document).ready(function(){
-    var banner = $("banner");
-    if (banner){
-        banner.click(function(){
-        alert("Library!!");
-    });
-    }
-    else{
-        alert('No banner!!');
-    };
 
     // CLICKABLE TABLE HEADINGS
     $('th').click(function(){

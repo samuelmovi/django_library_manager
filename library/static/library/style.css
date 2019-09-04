@@ -1,8 +1,9 @@
-
-body {
-  height: 100vh;
-  width: 100%;
+* {
+    margin: 0px;
+    padding: 0px;
 }
+
+
 
 .user-name {
   background-color: black;
@@ -82,7 +83,7 @@ th {
 }
 
 .home {
-  height: 50%;
+  height: 75%;
   width: 80%;
   margin: auto;
 }
