@@ -214,120 +214,6 @@ class NewBook(LoginRequiredMixin, View):
             return redirect('/bad_data/')
 
 
-"""
-class ModifyBook(LoginRequiredMixin, View):
-    login_url = '/login/'
-    
-    def get(self, request):
-        try:
-            title = _("Choose Book to Modify")
-            all_books = Book.objects.filter(username=request.user.username).order_by('id')
-            context = {
-                'action': 'modify',
-                'page_title': title,
-                # 'my_header': header,
-                'books': all_books,
-                'table_headers': book_table_headers,
-                'button_text': title,
-                'link': '/library/books/modify/'
-            }
-            return render(request, 'library/choose_book.html', context)
-        except Exception:
-            return redirect('/bad_data/')
-    
-    def post(self, request):
-        try:
-            # check csrf
-            request.csrf_processing_done = False
-            reason = CsrfViewMiddleware().process_view(request, None, (), {})
-            if reason is not None:
-                return reason
-            # get object from bookID
-            book = Book.objects.get(pk=request.POST['bookID'])
-            for k, v in request.POST.items():
-                print('\t> {}: {}'.format(k, v))
-            # prepare location drop-down data
-            all_locations = Location.objects.order_by('address')
-            my_locations = []
-            for location in all_locations:
-                value = location.id
-                text = location.address + ' - ' + location.room + ' - ' + location.furniture + ' - ' + location.details
-                data = {'value': value, 'text': text}
-                my_locations.append(data)
-            # set response's context
-            context = {
-                'book': book,
-                'all_locations': my_locations,
-                'action': 'modify',
-            }
-            return render(request, 'library/book_info.html', context)
-        except Exception:
-            return redirect('/bad_data/')
-
-
-@login_required(login_url='/login/')
-def book_modifier(request, **kwargs):
-    try:
-        if request.method == 'POST':
-            model_fields = [
-                'title', 'author', 'genre', 'publisher',
-                'isbn', 'publish_date', 'purchase_date', 'location']
-            # check csrf
-            request.csrf_processing_done = False
-            reason = CsrfViewMiddleware().process_view(request, None, (), {})
-            if reason is not None:
-                return reason
-            # get requested data
-            book = Book.objects.get(pk=request.POST['bookID'])
-            for field in model_fields:
-                book.__dict__[field] = request.POST.get(field, None)
-            # update modification date field
-            book.modified = timezone.now()
-            book.save()
-            return redirect('/books/')
-        else:
-            # send to bad data page
-            raise Http404(_("You are using the wrong type of method: {}".format(request.method)))
-    except Exception:
-        return redirect('/bad_data/')
-
-
-class DeleteBook(LoginRequiredMixin, View):
-    login_url = '/login/'
-    title = _("Choose Book to Delete")
-    
-    def get(self, request):
-        try:
-            all_books = Book.objects.filter(username=request.user.username).order_by('id')
-            context = {
-                'action': 'delete',
-                'page_title': self.title,
-                # 'my_header': header,
-                'books': all_books,
-                'table_headers': book_table_headers,
-                'button_text': self.title,
-                'link': '/library/books/delete/',
-            }
-            return render(request, 'library/choose_book.html', context)
-        except Exception:
-            return redirect('/bad_data/')
-    
-    def post(self, request):
-        try:
-            # check csrf
-            request.csrf_processing_done = False
-            reason = CsrfViewMiddleware().process_view(request, None, (), {})
-            if reason is not None:
-                return reason
-            # deleting db model entry
-            Book.objects.filter(pk=request.POST['bookID']).delete()
-            return redirect('/books/')
-        except Exception:
-            return redirect('/bad_data/')
-
-"""
-
-
 class LocationsView(LoginRequiredMixin, generic.ListView):
     login_url = '/login/'
     template_name = 'library/show_locations.html'
@@ -411,6 +297,7 @@ class LocationInfo(LoginRequiredMixin, View):
             if request.POST.get('action') == 'modify':
                 location = Location.objects.get(pk=location_id)
                 for field in self.model_fields:
+                    field = field.strip()
                     print("\t> {}: {}".format(field, request.POST.get(field, None)))
                     location.__dict__[field] = request.POST.get(field, None)
                 # update modification date field
@@ -425,41 +312,6 @@ class LocationInfo(LoginRequiredMixin, View):
         except Exception as e:
             print("[!] Error processing request: {}".format(e))
             return redirect('/bad_data/')
-
-
-"""
-class DeleteLocation(LoginRequiredMixin, View):
-    login_url = '/login/'
-    title = _("Choose Location to Delete")
-    
-    def get(self, request):
-        try:
-            all_location = Location.objects.order_by('id')
-            context = {
-                'action': 'delete',
-                'page_title': self.title,
-                # 'my_header': header,
-                'locations': all_location,
-                'table_headers': location_table_headers,
-                'button_text': self.title,
-            }
-            return render(request, 'library/choose_location.html', context)
-        except Exception:
-            return redirect('/bad_data/')
-    
-    def post(self, request):
-        try:
-            # check csrf
-            request.csrf_processing_done = False
-            reason = CsrfViewMiddleware().process_view(request, None, (), {})
-            if reason is not None:
-                return reason
-            # deleting db model entry
-            Location.objects.filter(pk=request.POST['locationID']).delete()
-            return redirect('/locations/')
-        except Exception:
-            return redirect('/bad_data/')
-"""
 
 
 class LoansView(LoginRequiredMixin, generic.ListView):

@@ -702,6 +702,8 @@ class LocationInfoTestCase(TestCase):
         self.assertEquals(type(response), HttpResponse)
         print("\t> status code: {}".format(response.status_code))
         self.assertEquals(response.status_code, 200)
+        content = response.content.decode()
+        self.assertEquals(content.count(self.string), 4)
     
     def test_modify_location(self):
         response = self.client.post('/locations/{}/'.format(self.location_id), {
