@@ -411,6 +411,7 @@ class LocationInfo(LoginRequiredMixin, View):
             if request.POST.get('action') == 'modify':
                 location = Location.objects.get(pk=location_id)
                 for field in self.model_fields:
+                    print("\t> {}: {}".format(field, request.POST.get(field, None)))
                     location.__dict__[field] = request.POST.get(field, None)
                 # update modification date field
                 location.modified = timezone.now()
