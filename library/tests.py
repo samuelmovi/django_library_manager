@@ -13,7 +13,7 @@ from .models import Book, Location, Loan
 
 
 class LocationTestCase (TestCase):
-    print("[#] Testing: Location Model")
+    print("[#] Location Model")
     test_fields = {
         'address': 'test address',
         'room': 'test room',
@@ -34,7 +34,7 @@ class LocationTestCase (TestCase):
         )
     
     def test_content(self):
-        print("[#] Testing Location model: content retrieval")
+        print("[#] Location model: content retrieval")
         location = Location.objects.get(address="test address")
         for field in self.test_fields:
             # print("[#] Field: {}".format(field))
@@ -44,7 +44,7 @@ class LocationTestCase (TestCase):
 
 
 class BookTestCase(TestCase):
-    print("[#] Testing: Book Model")
+    print("[#] Book Model")
     test_fields = {
         'title': 'test title',
         'author': 'test author',
@@ -86,7 +86,7 @@ class BookTestCase(TestCase):
         )
         
     def test_content(self):
-        print("[#] Testing Book model: content retrieval")
+        print("[#] Book model: content retrieval")
         book = Book.objects.get(title="test title")
         self.test_fields['location_id'] = Location.objects.get(address='address').id
         for field in self.test_fields:
@@ -97,7 +97,7 @@ class BookTestCase(TestCase):
 
 
 class LoanTestCase(TestCase):
-    print("[#] Testing: Loan Model")
+    print("[#] Loan Model")
     test_fields = {
         'book_id': '',
         'lender': 'test lender',
@@ -131,7 +131,7 @@ class LoanTestCase(TestCase):
         )
     
     def test_content(self):
-        print("[#] Testing Loan model: content retrieval")
+        print("[#] Loan model: content retrieval")
         loan = Loan.objects.get(lender="test lender")
         self.test_fields['book_id'] = Book.objects.get(title='title').id
         for field in self.test_fields.keys():
@@ -421,6 +421,7 @@ class BookInfoTestCase(TestCase):
         self.assertEquals(response.status_code, 302)
         print("\t> redirect chain: {}".format(response.url))
         self.assertEquals(response.url, '/books/')
+        # follow redirect
         response = self.client.get(response.url)
         print("\t> response type: {}".format(type(response)))
         self.assertEquals(type(response), TemplateResponse)
@@ -442,145 +443,6 @@ class BookInfoTestCase(TestCase):
         with self.assertRaises(Exception) as context:
             Book.objects.get(title=self.string)
         self.assertEqual(Book.DoesNotExist, type(context.exception))
-
-
-"""
-class ModifyBookTestCase(TestCase):
-    print("[#] ModifyBook View")
-    username1 = 'user1'
-    password1 = 'super_secret_password'
-    string = "jdfgjJdfgJfdGHDfhC"
-    string2 = "qweFC dsaCCAQesdc"
-    
-    def setUp(self):
-        User.objects.create_user(username=self.username1, password=self.password1)
-        self.client.login(username=self.username1, password=self.password1)
-        Book.objects.create(
-            title=self.string,
-            author=self.string,
-            genre=self.string,
-            publisher=self.string,
-            isbn=self.string,
-            publish_date=self.string,
-            purchase_date=self.string,
-            location=None,
-            loaned=False,
-            created=timezone.now(),
-            modified=timezone.now(),
-            username=self.username1,
-        )
-    
-    def test_login_required(self):
-        c = Client()
-        response = c.get('/books/modify/')
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponseRedirect)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 302)
-        print("\t> redirect chain: {}".format(response.url))
-        self.assertEquals(response.url, '/login/?next=/books/modify/')
-    
-    def test_get_page(self):
-        response = self.client.get('/books/modify/')
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponse)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 200)
-    
-    def test_get_book_info(self):
-        book_id = Book.objects.get(title=self.string).id
-        response = self.client.post('/books/modify/', {'bookID': book_id})
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponse)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 200)
-        print("\t> modified book info in content...")
-        content = response.content.decode()
-        self.assertEquals(content.count(self.string), 7)
-        
-    def test_modify_book(self):
-        book_id = Book.objects.get(title=self.string).id
-        response = self.client.post('/books/modify/{}/'.format(book_id), {
-            "bookID": book_id,
-            "title": self.string2,
-            "author": self.string2,
-            "genre": self.string2,
-            "publisher": self.string2,
-            "isbn": self.string2,
-            "publish_date": self.string2,
-            "purchase_date": self.string2,
-        })
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponseRedirect)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 302)
-        print("\t> redirect chain: {}".format(response.url))
-        self.assertEquals(response.url, '/books/')
-        response = self.client.get(response.url)
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), TemplateResponse)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 200)
-        print("\t> modified book info in content...")
-        content = response.content.decode()
-        self.assertEquals(content.count(self.string2), 7)
-
-
-class DeleteBookTestCase(TestCase):
-    print("[#] DeleteBook View")
-    username1 = 'user1'
-    password1 = 'super_secret_password'
-    string = "WQER£frFwefFwe23"
-    
-    def setUp(self):
-        User.objects.create_user(username=self.username1, password=self.password1)
-        self.client.login(username=self.username1, password=self.password1)
-        Book.objects.create(
-            title=self.string,
-            author=self.string,
-            genre=self.string,
-            publisher=self.string,
-            isbn=self.string,
-            publish_date=self.string,
-            purchase_date=self.string,
-            location=None,
-            loaned=False,
-            created=timezone.now(),
-            modified=timezone.now(),
-            username=self.username1,
-        )
-    
-    def test_login_required(self):
-        c = Client()
-        response = c.get('/books/delete/')
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponseRedirect)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 302)
-        print("\t> redirect chain: {}".format(response.url))
-        self.assertEquals(response.url, '/login/?next=/books/delete/')
-
-    def test_get_page(self):
-        response = self.client.get('/books/delete/')
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponse)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 200)
-    
-    def test_delete_book(self):
-        response = self.client.post('/books/delete/',
-                                    {'bookID': Book.objects.get(title=self.string).id})
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponseRedirect)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 302)
-        print("\t> redirect chain: {}".format(response.url))
-        self.assertEquals(response.url, '/books/')
-        with self.assertRaises(Exception) as context:
-            Book.objects.get(title=self.string)
-        self.assertEqual(Book.DoesNotExist, type(context.exception))
-
-"""
 
 
 class LocationsViewTestCase(TestCase):
@@ -666,11 +528,11 @@ class NewLocationView(TestCase):
 
 
 class LocationInfoTestCase(TestCase):
-    print("[#] LocationInfo View")
+    print("[#] LocationInfo Test")
     username1 = 'user1'
     password1 = 'super_secret_password'
     string = "NMJuyMuMjyNhy"
-    string2 = "juny76 U76uN&^"
+    string2 = "juny76 U76asdfas"
     location_id = 0
 
     def setUp(self):
@@ -687,6 +549,7 @@ class LocationInfoTestCase(TestCase):
         self.location_id = Location.objects.get(details=self.string).id
 
     def test_login_required(self):
+        print("[#] LocationInfo: login required")
         c = Client()
         response = c.get('/locations/{}/'.format(self.location_id))
         print("\t> response type: {}".format(type(response)))
@@ -706,6 +569,7 @@ class LocationInfoTestCase(TestCase):
         self.assertEquals(content.count(self.string), 4)
     
     def test_modify_location(self):
+        print("[#] LocationInfo: modify location")
         response = self.client.post('/locations/{}/'.format(self.location_id), {
             "locationID": self.location_id,
             "address": self.string2,
@@ -719,69 +583,22 @@ class LocationInfoTestCase(TestCase):
         print("\t> status code: {}".format(response.status_code))
         self.assertEquals(response.status_code, 302)
         print("\t> redirect chain: {}".format(response.url))
-        self.assertEquals(response.url, '/locations')
+        self.assertEquals(response.url, '/locations/')
+        # follow redirect
         response = self.client.get(response.url)
         print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponsePermanentRedirect)
+        self.assertEquals(type(response), TemplateResponse)
         print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 301)
+        self.assertEquals(response.status_code, 200)
         print("\t> modified book info in content...")
         content = response.content.decode()
+        # print("\t> Content: {}".format(content))
         self.assertEquals(content.count(self.string2), 4)
 
     def test_delete_location(self):
+        print("[#] LocationInfo: delete location")
         response = self.client.post('/locations/{}/'.format(self.location_id),
                                     {'locationID': Location.objects.get(address=self.string).id, "action": "delete"})
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponseRedirect)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 302)
-        print("\t> redirect chain: {}".format(response.url))
-        self.assertEquals(response.url, '/locations')
-        with self.assertRaises(Exception) as context:
-            Location.objects.get(address=self.string)
-        self.assertEqual(Location.DoesNotExist, type(context.exception))
-
-
-"""
-class DeleteLocationTestCase(TestCase):
-    print("[#] DeleteLocation View")
-    username1 = 'user1'
-    password1 = 'super_secret_password'
-    string = "NMJuyMuMjyNhy"
-    
-    def setUp(self):
-        User.objects.create_user(username=self.username1, password=self.password1)
-        self.client.login(username=self.username1, password=self.password1)
-        Location.objects.create(
-            address=self.string,
-            room=self.string,
-            furniture=self.string,
-            details=self.string,
-            created=timezone.now(),
-            username=self.username1,
-        )
-    
-    def test_login_required(self):
-        c = Client()
-        response = c.get('/locations/delete/')
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponseRedirect)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 302)
-        print("\t> redirect chain: {}".format(response.url))
-        self.assertEquals(response.url, '/login/?next=/locations/delete/')
-
-    def test_get_page(self):
-        response = self.client.get('/locations/delete/')
-        print("\t> response type: {}".format(type(response)))
-        self.assertEquals(type(response), HttpResponse)
-        print("\t> status code: {}".format(response.status_code))
-        self.assertEquals(response.status_code, 200)
-
-    def test_delete_location(self):
-        response = self.client.post('/locations/delete/',
-                                    {'locationID': Location.objects.get(address=self.string).id})
         print("\t> response type: {}".format(type(response)))
         self.assertEquals(type(response), HttpResponseRedirect)
         print("\t> status code: {}".format(response.status_code))
@@ -791,7 +608,6 @@ class DeleteLocationTestCase(TestCase):
         with self.assertRaises(Exception) as context:
             Location.objects.get(address=self.string)
         self.assertEqual(Location.DoesNotExist, type(context.exception))
-"""
 
 
 class LoansViewTestCase(TestCase):

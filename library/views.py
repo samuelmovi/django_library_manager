@@ -270,7 +270,7 @@ class NewLocation(LoginRequiredMixin, View):
 class LocationInfo(LoginRequiredMixin, View):
     login_url = '/login/'
     title = _("Location Info")
-    model_fields = ['address', 'room', ' furniture', 'details']
+    model_fields = ['address', 'room', 'furniture', 'details']
     
     def get(self, request, location_id):
         try:
@@ -297,7 +297,6 @@ class LocationInfo(LoginRequiredMixin, View):
             if request.POST.get('action') == 'modify':
                 location = Location.objects.get(pk=location_id)
                 for field in self.model_fields:
-                    field = field.strip()
                     print("\t> {}: {}".format(field, request.POST.get(field, None)))
                     location.__dict__[field] = request.POST.get(field, None)
                 # update modification date field
@@ -308,7 +307,7 @@ class LocationInfo(LoginRequiredMixin, View):
                 Location.objects.filter(pk=location_id).delete()
             else:
                 return redirect('/bad_data/')
-            return redirect('/locations')
+            return redirect('/locations/')
         except Exception as e:
             print("[!] Error processing request: {}".format(e))
             return redirect('/bad_data/')
